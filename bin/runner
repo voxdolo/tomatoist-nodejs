@@ -1,0 +1,11 @@
+#!/usr/local/bin/coffee
+argv: process.argv.slice(2)
+
+spawn: require('child_process').spawn
+
+compile: spawn('coffee',['-c',argv.pop])
+
+compile.stdout.addListener('data', (data) -> sys.print('stdout: ' + data))
+compile.stderr.addListener('data', (data) -> sys.print('stderr: ' + data))
+compile.addListener 'exit', (code) ->
+  sys.puts('child process exited with code ' + code)
