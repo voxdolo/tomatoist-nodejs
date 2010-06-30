@@ -1,0 +1,109 @@
+describe 'Ding'
+  context "a PUT to /:session"
+    it "should rename the Session"
+    it "should redirect to the session path after creation"
+    context "when the custom name is taken"
+      it "redirects to the current sessions path"
+  context "a PUT to /:session/reset"
+    it "should reset the session"
+    it "redirects to the current sessions path"
+  context "a POST to /:session/timers"
+    it "creates a new short break timer"
+    it "creates a new long break timer"
+    it "creates a new pomodoro timer"
+    it "redirects to the session"
+  context "a GET to '/'"
+    it "redirects you to a new session"
+  context "a GET to '/:session'"
+    it "retrieves the specified session"
+  context "a GET to '/:session/status.js'"
+    it "has an empty body when the session does not exist"
+    context "retrieves the specified session"
+      it 'has an empty body when there is no last timer'
+      it 'responds with json'
+  describe "#timer_class"
+    it "returns next when type is the same as the next timer"
+    it "returns current when type is the same as the current timer"
+    it "returns nil elsewise"
+describe LongBreak
+  it "defaults duration to 900"
+  it "reports it's label"
+describe Pomodoro
+  it "defaults duration to 1500"
+  it "reports it's name"
+describe Session
+  it "instantiates succesfully"
+  it "generates a name"
+  it "suggests the next session name"
+  it "has timers"
+  context "validating the custom name"
+    it "requires it to be unique"
+    it "doesn't validate if it's blank"
+  context "when returning a session name"
+    it "defaults to the session name"
+    it "yields the custom name when it's present"
+  context "setting the custom name"
+    it "does not alter 'safe' names"
+    it "replaces spaces with underscores"
+    it "removes non-word characters with"
+    it "'cleanses' unsafe names"
+  it "retrieves the most recently created Session"
+  it "retrieves the most recently created timer"
+  it "retrieves the first timer"
+  context "retrieving a session"
+    it "by it's generated name succeeds"
+    it "by it's custom name succeeds"
+    it "by a nonexistant custom name creates a session with that custom name"
+  it "retrieves the last long timer"
+  context "retrieving the timer that started the pomodoro iteration"
+    it "is the last long timer when a long timer is present"
+    it "is the first timer when there has been no long timer"
+  context "suggesting the next timer's type"
+    context "when there are no timers"
+      it "recommends a Pomodoro"
+    context "when the first timer was a pomodoro"
+      it "recommends a ShortBreak"
+    context "when the last timer was a break"
+      it "recommends a Pomodoro"
+    context "when the last timer was not a break"
+      context "and there are 2 or less shorts since the last long"
+        it "recommends a short break"
+      context "and there are 3 shorts since the last long"
+        it "recommends a long break"
+    it "recommends a short break after a full cycle and a long"
+  context "counting the number of short breaks since a long break"
+    it "Reports 0 when there are none"
+    it "Reports 1 when there is 1"
+    it "Reports 2 when there is 2"
+    it "Reports 3 when there is 3"
+    it "Reports 4 when there is 4"
+    it "Reports 0 after a long break"
+    it "Reports 1 when there is 1 short after a long"
+  describe "#reset!"
+    it "destroys all of a sessions timers"
+describe ShortBreak
+  it "defaults duration to 300"
+  it "reports it's name"
+describe Timer
+  it "populates created_at"
+  it "requires a duration"
+  it "requires a session_id"
+  it "gives a date of expiry"
+  context "displaying times"
+    it 'should show not show month & day if timer was created today'
+    it 'should show month & day if timer was not created today'
+  context "reporting it's expiry status"
+    context 'when it has exipred'
+      it 'says true'
+    context 'when it has not exipred'
+      it 'says false'
+  context 'retrieving timers by type'
+    it 'finds timers of the Pomodoro subtype'
+    it 'finds timers of the ShortBreak subtype'
+    it 'finds timers of the LongBreak subtype'
+  context 'instantiates timers by type'
+    it 'creates timers of the Pomodoro subtype'
+    it 'creates timers of the ShortBreak subtype'
+    it 'creates timers of the LongBreak subtype'
+  describe "#remainder"
+    it 'returns the time remaining in the timer in seconds'
