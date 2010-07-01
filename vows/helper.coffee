@@ -1,3 +1,4 @@
+require.paths.unshift("${__dirname}/../lib")
 sys: require('sys')
 assert: require('assert')
 
